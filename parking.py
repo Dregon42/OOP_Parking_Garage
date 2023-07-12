@@ -13,6 +13,7 @@ class Parking():
         day_pass = self.tickets.pop() 
         self.parking_spaces.pop()
         self.current_tickets[day_pass] = False
+        print(f'Your ticket number: {day_pass}')
 
     # create method to pay for ticket
     # Display input asking to pay - store input in variable
@@ -20,10 +21,13 @@ class Parking():
     # update self.current_tickets (key = 'paid, value = True)
     def payForParking(self):
         tick_num = input('What is your ticket number ')
-        if tick_num in self.current_tickets:
+        if self.current_tickets[int(tick_num)] == False:
             payment = input("Pay here ")
-            print('Ticket Paid for, you have 15mins to leave.')
-            self.current_tickets[int(tick_num)] = True
+            if payment != "":
+                print('Ticket Paid for, you have 15mins to leave.')
+                self.current_tickets[int(tick_num)] = True
+            else:
+                self.current_tickets[int(tick_num)] = False
 
 
     # create method for exiting garage
@@ -33,20 +37,18 @@ class Parking():
     # increase tickets by 1
     def leaveGarage(self):
         exit_num = input("Please enter ticket number. ")
-        if exit_num in self.current_tickets: # Meaning ticket was paid for
+        if self.current_tickets[int(exit_num)] == True: # Meaning ticket was paid for
             self.tickets.append(exit_num)          # add ticket back to list
             self.parking_spaces.append(exit_num)   # add spot back to parking_spaces
             print("Thank you have a nice day!")
         else:
-            self.payForParking() # if ticket is not paid for move to payForParking method
-    
+            pay = input("Enter payment ") # if ticket is not paid for move to payForParking method
+            print("Thank you have a nice day!") 
 
 
 # Instantiate 
-my_tickets = [i for i in range(20)]
-my_parkingspaces = [i for i in range(20)]
-my_parkinglot = Parking(my_tickets,my_parkingspaces,{})
-my_parkinglot.takeTicket()
+my_parkinglot = Parking([i for i in range(20)],[i for i in range(20)],{})
+
 
 def run():
 
