@@ -38,11 +38,15 @@ class Parking():
     def leaveGarage(self):
         exit_num = input("Please enter ticket number. ")
         if self.current_tickets[int(exit_num)] == True: # Meaning ticket was paid for
-            self.tickets.append(exit_num)          # add ticket back to list
-            self.parking_spaces.append(exit_num)   # add spot back to parking_spaces
+            self.tickets.append(int(exit_num))          # add ticket back to list
+            self.parking_spaces.append(int(exit_num))   # add spot back to parking_spaces
+            del self.current_tickets[int(exit_num)]
             print("Thank you have a nice day!")
         else:
             pay = input("Enter payment ") # if ticket is not paid for move to payForParking method
+            self.tickets.append(int(exit_num))
+            self.parking_spaces.append(int(exit_num))
+            del self.current_tickets[int(exit_num)]
             print("Thank you have a nice day!") 
 
 
